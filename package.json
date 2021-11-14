@@ -1,0 +1,38 @@
+{
+  "name": "pifagoredu",
+  "version": "0.0.1",
+  "description": "\u0016a program that will help you to improve your knowledge of geometry, solve and prove nonlinear geometric problems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vordme2010/pifagorEdu.git"
+  },
+  "keywords": [
+    "geometry",
+    "problems-solving",
+    "education"
+  ],
+  "author": "JB",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.27.5",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.0.0",
+    "gulp-purgecss": "^4.0.3",
+    "gulp-sass": "^5.0.0",
+    "gulp-uglify": "^3.0.2",
+    "imagemin-pngquant": "^9.0.2",
+    "sass": "^1.39.0"
+  },
+  "bugs": {
+    "url": "https://github.com/vordme2010/pifagorEdu/issues"
+  },
+  "homepage": "https://github.com/vordme2010/pifagorEdu#readme"
+}
