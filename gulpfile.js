@@ -17,7 +17,6 @@ const compile = function() {
         .pipe(gulp.dest("./dist/"))
     gulp.src('./src/**/*.js')
         .pipe(concat('scripts.js'))
-        .pipe(uglifyJs())
         .pipe(gulp.dest('./dist/scripts/'))
     return gulp.src('./src/styles/styles.scss')
         .pipe(sass().on('error', sass.logError))
@@ -33,6 +32,8 @@ gulp.task('build', function() {
     gulp.src('./src/img/**')
         .pipe(imagemin())
         .pipe(gulp.dest('./dist/img/'))
+    gulp.src('./src/**/*.js')
+        .pipe(uglifyJs())
     gulp.src('./src/styles/styles.scss')
         .pipe(purgeCss({
             content: ['src/**/*.html']
