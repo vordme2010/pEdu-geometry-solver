@@ -24,7 +24,7 @@
         margin-bottom: 20px;
     }
     &__condition-inputs {
-        width: 370px;
+        width: 470px;
     }
     &__condition-item {
         width: 330px;
@@ -79,12 +79,32 @@
         left: 129.5px;
         top: calc(100% - 97px);
     }
-    &__task-submit-btn {
+    &__tofind-buttons {
         display: flex;
         align-self: flex-end;
         justify-content: center;
         align-items: center;
         margin-right: 8px;
+    }
+    &__tofind-reset-btn {
+        margin-right: 20px;
+        padding: 6px;
+        width: 90px;
+        height: 40px;
+        text-transform: uppercase;
+        font-weight: bold;
+        background-color: #181f1c5e;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        &:hover {
+            background-color: white;
+            color: #181f1c5e;
+            border: 2px solid #181f1c5e;
+            cursor: pointer;
+        }
+    }
+    &__tofind-submit-btn {
         padding: 6px;
         width: 90px;
         height: 40px;

@@ -26,16 +26,16 @@
                                 <div class="u-equal-sign">=</div>
                                 <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text">
                                 <select class="u-select workspace__condition-select js-workspace__condition-select" name="select">
-                                    <option class="workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
-                                    <option class="workspace__condition-select-option" value="right-triangle">Right Triangle</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="right-triangle">Right Triangle</option>
                                     <!-- <option class="workspace__condition-select-option" value="equilateral-triangle">Equilateral Triangle</option>
                                     <option class="workspace__condition-select-option" value="isosceles-triangle">Isosceles Triangle</option> -->
-                                    <option class="workspace__condition-select-option" value="angle">Angle</option>
-                                    <option class="workspace__condition-select-option" value="side">Side</option>
-                                    <option class="workspace__condition-select-option" value="median">Median</option>
-                                    <option class="workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
-                                    <option class="workspace__condition-select-option" value="height">Height</option>
-                                    <option class="workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle">Angle</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="side">Side</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="height">Height</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
                                 </select>
                             </div> 
                             <div class="u-input-btn">
@@ -46,7 +46,7 @@
                         </div>
 
                         <svg width="30" height="30" class="u-svg-btn workspace__condition-add-btn js-workspace__condition-add-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="js-add-path" d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM4 12.172C4.04732 16.5732 7.64111 20.1095 12.0425 20.086C16.444 20.0622 19.9995 16.4875 19.9995 12.086C19.9995 7.68451 16.444 4.10977 12.0425 4.086C7.64111 4.06246 4.04732 7.59876 4 12V12.172ZM13 17H11V13H7V11H11V7H13V11H17V13H13V17Z" fill="rgba(0, 0, 0, 0.650)"/>
+                            <path class="js-add-path js-condition-add-path" d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM4 12.172C4.04732 16.5732 7.64111 20.1095 12.0425 20.086C16.444 20.0622 19.9995 16.4875 19.9995 12.086C19.9995 7.68451 16.444 4.10977 12.0425 4.086C7.64111 4.06246 4.04732 7.59876 4 12V12.172ZM13 17H11V13H7V11H11V7H13V11H17V13H13V17Z" fill="rgba(0, 0, 0, 0.650)"/>
                         </svg>
                      
 
@@ -76,7 +76,10 @@
                         </svg>
 
                     </div>
-                    <button class="workspace__task-submit-btn">submit</button>
+                    <div class="workspace__tofind-buttons">
+                        <button class="workspace__tofind-reset-btn js-workspace__tofind-reset-btn">reset</button>
+                        <button class="workspace__tofind-submit-btn js-workspace__tofind-submit-btn">submit</button>
+                    </div>
                 </div>   
             </div>
             <div class="workspace__result">
