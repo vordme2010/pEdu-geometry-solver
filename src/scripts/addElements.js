@@ -99,7 +99,7 @@ class AddElements {
             //if() to avoid using loops and changing variables after re-occurrence of elements --- del-btn
             else if(event.target.classList.contains(`js-workspace__${classification}-del-btn`) || event.target.classList.contains('js-del-path')) {
                 if(document.querySelectorAll(`.workspace__${classification}-item`).length > 1) {
-                    this.deletedInputsSetings(event.target.closest(`.workspace__${classification}-item`), classification)
+                    this.deletedInputsSetings(event.target.closest(".workspace__condition-item"), classification)
                     event.target.closest(`.workspace__${classification}-item`).remove()
                 }
             }
