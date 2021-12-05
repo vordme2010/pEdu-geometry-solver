@@ -9,6 +9,7 @@ class AddElements {
         //layout for condition
         this.conditionAdditionalLayout = `<div class="u-equal-sign">=</div>
         <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text">
+        <input class="u-input workspace__condition-input-angle js-workspace__condition-input-angle" placeholder="angle" maxlength="3" type="text">
         <select class="u-select workspace__condition-select js-workspace__condition-select" name="select">
         <option class="workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
         <option class="workspace__condition-select-option" value="right-triangle">Right Triangle</option>
@@ -32,11 +33,10 @@ class AddElements {
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
         const itemWrapper = target.closest(`.workspace__${classification}-item`)
         const allItemWrapper = document.body.querySelectorAll(`.workspace__${classification}-item`)
+        const inputAngle = itemWrapper.querySelector(`.js-workspace__${classification}-input-angle`)
         if (target.value == "height" || target.value == "angle-bisector" || target.value == "median" || target.value == "hypotenuse") {
-            if (itemWrapper.querySelectorAll(`.js-workspace__${classification}-input-angle`).length < 1) {
-                itemWrapper.querySelector(`.js-workspace__${classification}-input-value`).insertAdjacentHTML("afterend", `
-                <input class="u-input workspace__${classification}-input-angle js-workspace__${classification}-input-angle" placeholder="angle" maxlength="3" type="text">`
-                ) 
+            if (itemWrapper.querySelectorAll(`.js-workspace__${classification}-input-angle`).length < 2) {
+                inputAngle.style.display = "block"
                 itemWrapper.querySelector(".u-equal-sign").style.display = "block"
                 itemWrapper.querySelector(`.js-workspace__${classification}-input-value`).style.display = "block"
                 itemWrapper.style.width = "409px"
@@ -49,21 +49,15 @@ class AddElements {
             itemWrapper.querySelector(".u-equal-sign").style.display = "none"
             itemWrapper.querySelector(`.js-workspace__${classification}-input-value`).style.display = "none"
             itemWrapper.style.width = "239px"
+            inputAngle.style.display = "none"
             if(allItemWrapper[allItemWrapper.length - 1] == itemWrapper) {
                 addBtn.style.left = "259px"
-            }
-            const inputAngle = itemWrapper.querySelector(`.js-workspace__${classification}-input-angle`)
-            if (inputAngle) {
-                inputAngle.remove()
             }
         }
         else {
             itemWrapper.querySelector(".u-equal-sign").style.display = "block"
             itemWrapper.querySelector(`.js-workspace__${classification}-input-value`).style.display = "block"
-            const inputAngle =  itemWrapper.querySelector(`.js-workspace__${classification}-input-angle`)
-            if (inputAngle) {
-                inputAngle.remove()
-            }
+            inputAngle.style.display = "none"
             itemWrapper.style.width = "330px"
             if(allItemWrapper[allItemWrapper.length - 1] == itemWrapper) {
                 addBtn.style.left = "349px"
@@ -72,17 +66,19 @@ class AddElements {
     }
 
     //buttons setting for previous item
-    deletedInputsSetings(classification) {
+    deletedInputsSetings(target, classification) {
         const allItemWrapper = document.body.querySelectorAll(`.workspace__${classification}-item`)
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
-        if(allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-input-angle`)) {
-            addBtn.style.left = "428px"
-        }
-        else if(allItemWrapper[allItemWrapper.length - 2].querySelector(".u-equal-sign").style.display == "none") {
-            addBtn.style.left = "259px"
-        }
-        else {
-            addBtn.style.left = "349px"
+        if(allItemWrapper[allItemWrapper.length - 1] == target) {
+            if(allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-input-angle`).style.display == "block") {
+                addBtn.style.left = "428px"
+            }
+            else if(allItemWrapper[allItemWrapper.length - 2].querySelector(".u-equal-sign").style.display == "none") {
+                addBtn.style.left = "259px"
+            }
+            else {
+                addBtn.style.left = "349px"
+            }
         }
     }
     
@@ -100,10 +96,10 @@ class AddElements {
                     document.body.querySelector(`.js-workspace__${classification}-add-btn`).style.left = "349px"
                 }
             }
-            //if() to avoid using loops and changing variables after re-occurrence of elements
+            //if() to avoid using loops and changing variables after re-occurrence of elements --- del-btn
             else if(event.target.classList.contains(`js-workspace__${classification}-del-btn`) || event.target.classList.contains('js-del-path')) {
                 if(document.querySelectorAll(`.workspace__${classification}-item`).length > 1) {
-                    this.deletedInputsSetings(classification)
+                    this.deletedInputsSetings(event.target.closest(`.workspace__${classification}-item`), classification)
                     event.target.closest(`.workspace__${classification}-item`).remove()
                 }
             }
