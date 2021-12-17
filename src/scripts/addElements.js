@@ -94,7 +94,7 @@ class AddElements {
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
         if(allItemWrapper[allItemWrapper.length - 1] == target) {
             const penultItemHasInputAngle = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-input-angle`).style.display == "block"
-            const penultItemHasNotEqualSign = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-select-triangle`).style.display == "block"
+            const penultItemHasTriangleSelect = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-select-triangle`).style.display == "block"
             if(penultItemHasInputAngle) {
                 addBtn.style.left = "428px"
             }
