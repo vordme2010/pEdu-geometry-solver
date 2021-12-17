@@ -12,9 +12,11 @@ const imagemin = require('gulp-imagemin');
 const purgeCss = require('gulp-purgecss');
 
 
-const compile = function() {
+const compilation = function() {
     gulp.src("src/**/*.html")
         .pipe(gulp.dest("./dist/"))
+    gulp.src('./libraries/**/*.js')
+        .pipe(gulp.dest('./dist/libraries/'))
     gulp.src('./src/**/*.js')
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest('./dist/scripts/'))
@@ -29,22 +31,22 @@ const compile = function() {
 }
 gulp.task('build', function() {
     del.sync('dist');
+    // gulp.src('./src/**/*.js')
+    //     .pipe(uglifyJs()) -----------fix
     gulp.src('./src/img/**')
         .pipe(imagemin())
         .pipe(gulp.dest('./dist/img/'))
-    gulp.src('./src/**/*.js')
-        .pipe(uglifyJs())
     gulp.src('./src/styles/styles.scss')
         .pipe(purgeCss({
             content: ['src/**/*.html']
         }))
-    compile()
+    compilation()
 })
 gulp.task('dev', function() {
     browserSync.init({
         server: "./dist"
     });
-    compile()
-    gulp.watch(['./src/**/*.scss', './src/**/*.js', "./src/*.html", './src/img/*'], compile);
+    compilation()
+    gulp.watch(['./src/**/*.scss', './src/**/*.js', "./src/*.html", './src/img/*'], compilation);
     gulp.watch("./src/*.html").on('change', browserSync.reload);
 });

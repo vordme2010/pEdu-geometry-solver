@@ -24,7 +24,7 @@
         margin-bottom: 20px;
     }
     &__condition-inputs {
-        width: 470px;
+        width: 480px;
     }
     &__condition-item {
         width: 330px;
@@ -34,12 +34,15 @@
         align-items: center;
     }
     &__condition-input-name {
-
     }
     &__condition-input-value {
 
     }
     &__condition-input-angle {
+        display: none;
+    }
+    &__condition-select-triangle {
+        width: 100px !important;
         display: none;
     }
     &__condition-select {
@@ -68,18 +71,17 @@
         max-width: 350px;
     }
     &__tofind-item {
-        width: 110px;
+        width: 240px;
         margin-right: 20px;
     }
     &__tofind-item-wrapper {
-
+        display: flex;
     }
     &__tofind-input-name {
-
     }
     &__tofind-add-btn {
         position: absolute;
-        left: 129.5px;
+        left: 259.5px;
         top: calc(100% - 97px);
     }
     &__tofind-buttons {
@@ -175,6 +177,7 @@
     margin-bottom: 20px;
 }
 .u-input {
+    cursor: pointer;
     width: 50px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.356);
@@ -183,6 +186,7 @@
     margin: 0 8px 0 8px;
 }
 .u-select {
+    cursor: pointer;
     width: 117px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.356);
