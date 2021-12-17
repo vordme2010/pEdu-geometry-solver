@@ -19,13 +19,17 @@
                 <div class="workspace__condition">
                     <h2 class="u-title workspace__condition-title">Your condition here:</h2>
                     <div class="workspace__condition-inputs js-workspace__condition-inputs">
-
                         <div class="u-item workspace__condition-item">
                             <div class="u-item-wrapper workspace__condition-item-wrapper">
-                                <input class="u-input workspace__condition-input-name js-workspace__condition-input-name" placeholder="name"  maxlength="3" type="text">
+                            <input class="u-input workspace__condition-input-name js-workspace__condition-input-name" placeholder="name"  maxlength="3" type="text" oninput="let p=this.selectionStart; this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);" >
                                 <div class="u-equal-sign">=</div>
-                                <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text">
-                                <input class="u-input workspace__condition-input-angle js-workspace__condition-input-angle" placeholder="angle" maxlength="3" type="text">
+                                <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
+                                <select class="u-select workspace__condition-select-triangle js-workspace__condition-select-triangle" name="select">
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>the value is...</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="area">Area</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="perimeter">Perimeter</option>
+                                </select>
+                                <input class="u-input workspace__condition-input-angle js-workspace__condition-input-angle" placeholder="angle" maxlength="3" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
                                 <select class="u-select workspace__condition-select js-workspace__condition-select" name="select">
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="right-triangle">Right Triangle</option>
@@ -49,10 +53,7 @@
                         <svg width="30" height="30" class="u-svg-btn workspace__condition-add-btn js-workspace__condition-add-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path class="js-add-path js-condition-add-path" d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM4 12.172C4.04732 16.5732 7.64111 20.1095 12.0425 20.086C16.444 20.0622 19.9995 16.4875 19.9995 12.086C19.9995 7.68451 16.444 4.10977 12.0425 4.086C7.64111 4.06246 4.04732 7.59876 4 12V12.172ZM13 17H11V13H7V11H11V7H13V11H17V13H13V17Z" fill="rgba(0, 0, 0, 0.650)"/>
                         </svg>
-                     
-
-                        
-                        
+                    
                         
                     </div>
                 </div>
@@ -63,7 +64,13 @@
                     
                         <div class="u-item workspace__tofind-item">
                             <div class="u-item-wrapper workspace__tofind-item-wrapper">
-                                <input class="u-input workspace__tofind-input-name js-workspace__tofind-input-name" maxlength="3" placeholder="name" type="text">
+                                <input class="u-input workspace__tofind-input-name js-workspace__tofind-input-name" maxlength="3" placeholder="name" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
+                                <select class="u-select workspace__tofind-select js-workspace__tofind-select" name="select">
+                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="choose" selected disabled>what's it?</option>
+                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="value">Value</option>
+                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="area">Area</option>
+                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="perimeter">Perimeter</option>
+                                </select>
                             </div>
                             <div class="u-input-btn">
                                 <svg width="30" height="30" class="u-svg-btn workspace__tofind-del-btn js-workspace__tofind-del-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,12 +92,15 @@
             </div>
             <div class="workspace__result">
                 <h2 class="u-title workspace__result-title">result:</h2>
-                <div class="workspace__result-solution"></div>
+                <canvas id="myCanvas" width="200px" height="150px"></canvas>
+                <div class="workspace__result-solution">
+                </div>
             </div>
             <div style="align-self: flex-end;">version: 0.0.1</div>
             
         </div>
     </main>
+    <script src="libraries/math.js"></script>
     <script src="scripts/scripts.js"></script>
 </body>
 </html>
