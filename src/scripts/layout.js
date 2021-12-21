@@ -11,20 +11,20 @@ class AddElements {
         this.conditionAdditionalLayout = `<div class="u-equal-sign">=</div>
         <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text" ${this.upperCaseText}>
         <select class="u-select workspace__condition-select-triangle js-workspace__condition-select-triangle" name="select">
-        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>the value is...</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected>the value is...</option>
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="area">Area</option>
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="perimeter">Perimeter</option>
         </select>
         <input class="u-input workspace__condition-input-angle js-workspace__condition-input-angle" placeholder="angle" maxlength="3" type="text" ${this.upperCaseText}>
         <select class="u-select workspace__condition-select js-workspace__condition-select" name="select">
-        <option class="workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
-        <option class="workspace__condition-select-option" value="right-triangle">Right Triangle</option>
-        <option class="workspace__condition-select-option" value="angle">Angle</option>
-        <option class="workspace__condition-select-option" value="side">Side</option>
-        <option class="workspace__condition-select-option" value="median">Median</option>
-        <option class="workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
-        <option class="workspace__condition-select-option" value="height">Height</option>
-        <option class="workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected>what's it?</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="right-triangle">Right Triangle</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle">Angle</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="side">Side</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="height">Height</option>
+        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
         </select>`
 
         this.tofindAdditionalLayout = `<select class="u-select workspace__tofind-select js-workspace__tofind-select" name="select">
@@ -44,8 +44,8 @@ class AddElements {
 
     inputsSettings(target, classification) {
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
-        const itemWrapper = target.closest(`.workspace__${classification}-item`)
-        const allItemWrapper = document.body.querySelectorAll(`.workspace__${classification}-item`)
+        const itemWrapper = target.closest(`.js-workspace__${classification}-item`)
+        const allItemWrapper = document.body.querySelectorAll(`.js-workspace__${classification}-item`)
         const inputAngle = itemWrapper.querySelector(`.js-workspace__${classification}-input-angle`)
         const inputValue = itemWrapper.querySelector(`.js-workspace__${classification}-input-value`)
         const selectTriangle = itemWrapper.querySelector(`.js-workspace__${classification}-select-triangle`) 
@@ -64,11 +64,7 @@ class AddElements {
             }
         }
         else if (target.value == "right-triangle" || target.value == "equilateral-triangle" || target.value == "isosceles-triangle") {
-            // equalSign.style.display = "block"
-            // inputValue.style.display = "none"
-            // inputValue.value = ""
             inputAngle.style.display = "none"
-            // inputAngle.value = ""
             selectTriangle.style.display = "block"
             itemWrapper.style.width = "439px"
             if(checkCurrentWrapper) {
@@ -90,11 +86,11 @@ class AddElements {
 
     //buttons setting for previous item
     saveDeletedInputsSetings(target, classification) {
-        const allItemWrapper = document.body.querySelectorAll(`.workspace__${classification}-item`)
+        const allItemWrapper = document.body.querySelectorAll(`.js-workspace__${classification}-item`)
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
         if(allItemWrapper[allItemWrapper.length - 1] == target) {
             const penultItemHasInputAngle = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-input-angle`).style.display == "block"
-            const penultItemHasNotEqualSign = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-select-triangle`).style.display == "block"
+            const penultItemHasTriangleSelect = allItemWrapper[allItemWrapper.length - 2].querySelector(`.js-workspace__${classification}-select-triangle`).style.display == "block"
             if(penultItemHasInputAngle) {
                 addBtn.style.left = "428px"
             }
@@ -117,7 +113,7 @@ class AddElements {
             const catchAddBtn = event.target.classList.contains(`js-workspace__${classification}-add-btn`) || event.target.classList.contains('js-add-path')
             const catchDelBtn = event.target.classList.contains(`js-workspace__${classification}-del-btn`) || event.target.classList.contains('js-del-path')
             const checkAddBtn = event.target.classList.contains("js-workspace__condition-add-btn") || event.target.classList.contains("js-condition-add-path")
-            const delBtnFuncsCondition = document.querySelectorAll(`.workspace__${classification}-item`).length > 1
+            const delBtnFuncsCondition = document.querySelectorAll(`.js-workspace__${classification}-item`).length > 1
             //if() to avoid using loops and changing variables after re-occurrence of elements
             if(catchAddBtn) {
                 this.addItems(inputWrapper, classification, elemCondition)
@@ -128,8 +124,8 @@ class AddElements {
             //if() to avoid using loops and changing variables after re-occurrence of elements --- del-btn
             else if(catchDelBtn) {
                 if(delBtnFuncsCondition) {
-                    this.saveDeletedInputsSetings(event.target.closest(".workspace__condition-item"), classification)
-                    event.target.closest(`.workspace__${classification}-item`).remove()
+                    this.saveDeletedInputsSetings(event.target.closest(".js-workspace__condition-item"), classification)
+                    event.target.closest(`.js-workspace__${classification}-item`).remove()
                 }
             }
         })  
@@ -143,7 +139,7 @@ class AddElements {
 
     addItems(wrapper, classification, elemCondition) {
         wrapper.insertAdjacentHTML("beforeend", 
-            `<div class="u-item workspace__${classification}-item">
+            `<div class="u-item workspace__${classification}-item js-workspace__${classification}-item">
             <div class="u-item-wrapper workspace__${classification}-item-wrapper">
             <input class="u-input workspace__${classification}-input-name js-workspace__${classification}-input-name" placeholder="name"  maxlength="3" type="text" ${this.upperCaseText}>
             ${elemCondition} 
@@ -156,7 +152,7 @@ class AddElements {
     }
     
     deleteAllInputs(classification) {
-        document.body.querySelectorAll(`.workspace__${classification}-item`).forEach(elem => {
+        document.body.querySelectorAll(`.js-workspace__${classification}-item`).forEach(elem => {
             elem.remove()
         })
     }
@@ -176,3 +172,4 @@ class AddElements {
 const addElements = new AddElements
 
 //verified, no bugs found
+
