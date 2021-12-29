@@ -28,7 +28,7 @@ class AddElements {
         </select>`
 
         this.tofindAdditionalLayout = `<select class="u-select workspace__tofind-select js-workspace__tofind-select" name="select">
-        <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="choose" selected disabled>what's it?</option>
+        <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="choose" selected>what's it?</option>
         <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="value">Value</option>
         <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="area">Area</option>
         <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="perimeter">Perimeter</option>
@@ -51,7 +51,7 @@ class AddElements {
         const selectTriangle = itemWrapper.querySelector(`.js-workspace__${classification}-select-triangle`) 
         const equalSign = itemWrapper.querySelector(".u-equal-sign")
         const checkCurrentWrapper = allItemWrapper[allItemWrapper.length - 1] == itemWrapper
-        if (target.value == "height" || target.value == "angle-bisector" || target.value == "median" || target.value == "hypotenuse") {
+        if (target.value == "height" || target.value == "angle-bisector" || target.value == "median") {
             if (itemWrapper.querySelectorAll(`.js-workspace__${classification}-input-angle`).length < 2) {
                 equalSign.style.display = "block"
                 inputValue.style.display = "block"
@@ -130,7 +130,7 @@ class AddElements {
             }
         })  
         inputWrapper.addEventListener("change", (event) => {
-            const hasSelectInput = event.target.classList.contains(`js-workspace__${classification}-select`)
+            const hasSelectInput = event.target.classList.contains(`js-workspace__condition-select`)
             if (hasSelectInput) {
                 this.inputsSettings(event.target, classification)
             }

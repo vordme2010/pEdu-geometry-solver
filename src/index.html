@@ -19,19 +19,19 @@
                 <div class="workspace__condition">
                     <h2 class="u-title workspace__condition-title">Your condition here:</h2>
                     <div class="workspace__condition-inputs js-workspace__condition-inputs">
-                        <div class="u-item workspace__condition-item">
+                        <div class="u-item workspace__condition-item js-workspace__condition-item">
                             <div class="u-item-wrapper workspace__condition-item-wrapper">
-                            <input class="u-input workspace__condition-input-name js-workspace__condition-input-name" placeholder="name"  maxlength="3" type="text" oninput="let p=this.selectionStart; this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);" >
+                            <input class="u-input workspace__condition-input-name js-workspace__condition-input-name" placeholder="name"  maxlength="3" type="text" oninput="let p=this.selectionStart; this.value=this.value.toUpperCase().replace(/\s/g, '').replace(/\d/g, ''); this.setSelectionRange(p, p);" >
                                 <div class="u-equal-sign">=</div>
                                 <input class="u-input workspace__condition-input-value js-workspace__condition-input-value" placeholder="value" maxlength="3" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
                                 <select class="u-select workspace__condition-select-triangle js-workspace__condition-select-triangle" name="select">
-                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>the value is...</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected>the value is...</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="area">Area</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="perimeter">Perimeter</option>
                                 </select>
                                 <input class="u-input workspace__condition-input-angle js-workspace__condition-input-angle" placeholder="angle" maxlength="3" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
                                 <select class="u-select workspace__condition-select js-workspace__condition-select" name="select">
-                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected disabled>what's it?</option>
+                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="choose" selected>what's it?</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="right-triangle">Right Triangle</option>
                                     <!-- <option class="workspace__condition-select-option" value="equilateral-triangle">Equilateral Triangle</option>
                                     <option class="workspace__condition-select-option" value="isosceles-triangle">Isosceles Triangle</option> -->
@@ -62,11 +62,11 @@
                     <div class="workspace__tofind-inputs js-workspace__tofind-inputs">
                         
                     
-                        <div class="u-item workspace__tofind-item">
+                        <div class="u-item workspace__tofind-item js-workspace__tofind-item">
                             <div class="u-item-wrapper workspace__tofind-item-wrapper">
-                                <input class="u-input workspace__tofind-input-name js-workspace__tofind-input-name" maxlength="3" placeholder="name" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, ''); this.setSelectionRange(p, p);">
+                                <input class="u-input workspace__tofind-input-name js-workspace__tofind-input-name" maxlength="3" placeholder="name" type="text" oninput="let p=this.selectionStart;this.value=this.value.toUpperCase().replace(/\s/g, '').replace(/\d/g, ''); this.setSelectionRange(p, p);">
                                 <select class="u-select workspace__tofind-select js-workspace__tofind-select" name="select">
-                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="choose" selected disabled>what's it?</option>
+                                    <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="choose" selected>what's it?</option>
                                     <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="value">Value</option>
                                     <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="area">Area</option>
                                     <option class="workspace__tofind-select-option js-workspace__tofind-select-option" value="perimeter">Perimeter</option>
@@ -101,6 +101,8 @@
         </div>
     </main>
     <script src="libraries/math.js"></script>
-    <script src="scripts/scripts.js"></script>
+    <!-- <script src="scripts/triangleComponents.js"></script> -->
+    <script type="module" src="scripts/initialData.js"></script>
+    <script src="scripts/layout.js"></script>
 </body>
 </html>
