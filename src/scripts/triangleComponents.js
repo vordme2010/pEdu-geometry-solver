@@ -88,6 +88,18 @@ export class Side extends Angle{
     constructor() {
         super()
     }
+    set coordinates(coordinates) {
+        this._coordinates = coordinates
+    }
+    get coordinates() {
+        return this._coordinates
+    }
+    set innerDots(innerDots) {
+        this._innerDots = innerDots
+    }
+    get innerDots() {
+        return this._innerDots
+    }
 }
 
 //median, height, angle-bisector

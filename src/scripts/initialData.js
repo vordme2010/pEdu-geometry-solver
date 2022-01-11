@@ -1,16 +1,21 @@
-import {Triangle, Angle, Side, InnerSegments} from "./triangleComponents.js"
-import {ToFind} from "./components.js"
+// import {Triangle, Angle, Side, InnerSegments} from "./triangleComponents.js"
+import {CreateComponents} from "./createComponents.js"
+import {RightTriangleVectorModel} from "./rightTriangleVectorModel.js"
 class InitialData {
     constructor() {
         this.initialData = []
         this.tofind = []
-        this.additionalData = []
-        this.checkForTriangleArr = []
         this.erroredDataItem = []
+        //components
+        this.createComponents = new CreateComponents
         this.triangles = []
         this.innerSegments = []
         this.sides = []
         this.angles = []
+        //additional
+        this.parentRightAngle = []
+        this.hypotenuse = []
+        // funcs
         this.runSolving()
     }
     runSolving() {
@@ -23,20 +28,19 @@ class InitialData {
         })
     }
     gatherInitialData() {
-        this.initialData.length = 0
-        this.tofind.length = 0
-        this.checkForTriangleArr.length = 0
-        this.erroredDataItem.length = 0
-        this.triangles.length = 0
-        this.innerSegments.length = 0
-        this.sides.length = 0
-        this.angles.length = 0
+        this.resetDataArrays()
         const dataItemsCondition = document.querySelectorAll(".js-workspace__condition-item")
         const dataItemsToFind = document.querySelectorAll(".js-workspace__tofind-item")
         try {
             this.setAllItems(dataItemsCondition, "condition")
             this.setAllItems(dataItemsToFind, "tofind")
-            const conditionForRightTriangle = this.checkForRightTriangle()
+            if(this.triangles.length > 1) {
+                this.setAllWrong("triangle")
+            }
+            else if(this.triangles.length == 0) {
+                alert("There's no Triangle to solve")
+            }
+            const conditionForRightTriangle = this.checkForRightTriangle() 
             if(this.erroredDataItem.length != 0) {
                 throw this.erroredDataItem
             }
@@ -49,12 +53,6 @@ class InitialData {
             else if(this.tofind.length == 0 && this.initialData.length == 0) {
                 alert(`You haven't entered any of needed information for solving yet! Please use the "condition" and "what we need to find" input fields to start working with this app`)
             }
-            else if(this.checkForTriangleArr.length > 1) {
-                this.setAllWrong("triangle")
-            }
-            else if(this.checkForTriangleArr.length == 0) {
-                alert("There's no Triangle to solve")
-            }
             else if(!conditionForRightTriangle) {
                 alert("Incorrect condition for Right triangle case")
             }
@@ -62,8 +60,23 @@ class InitialData {
                 this.initialData[0].layoutItem.style.border = "1px solid red"
             }
             else {
-                console.log(this.initialData)
-                console.log(this.tofind)
+                const triangleType = this.triangles[0].type
+                const triangleName = this.triangles[0].name
+                this.sortAlphabetically(this.triangles)
+                this.sortAlphabetically(this.innerSegments)
+                this.sortAlphabetically(this.sides)
+                this.sortAlphabetically(this.hypotenuse)
+                if(triangleType == "right-triangle") {
+                    const rightTriangleVectorModel = new RightTriangleVectorModel(
+                        triangleName,
+                        this.triangles,
+                        this.innerSegments, 
+                        this.sides, 
+                        this.angles,
+                        this.parentRightAngle,
+                        this.hypotenuse
+                    )
+                }
             }
         } 
         catch (erroredDataItem) {
@@ -71,6 +84,17 @@ class InitialData {
                 erroredDataItem[i].style.border = "1px solid red"
             }
         }
+    }
+    resetDataArrays() {
+        this.initialData.length = 0
+        this.tofind.length = 0
+        this.erroredDataItem.length = 0
+        this.triangles.length = 0
+        this.innerSegments.length = 0
+        this.sides.length = 0
+        this.angles.length = 0
+        this.parentRightAngle.length = 0
+        this.hypotenuse.length = 0
     }
     setAllItems(dataItems, classification) {
         dataItems.forEach(dataItem => {
@@ -113,13 +137,18 @@ class InitialData {
             
         })
     }
-    checkForDuplicates(value, key, arrayToCheck, flag) {
+    checkForDuplicates(value, key, arrayToCheck, flag, angleDataType) {
         let hasDuplicates = false
         arrayToCheck.forEach(valuesToCheck => {
             const hasEqualNames = value == valuesToCheck[key] || value.split("").reverse().join("") == valuesToCheck[key]
+            const hasEqualDataTypes = angleDataType == valuesToCheck.type
             const hasValue = valuesToCheck.value != undefined
             if(valuesToCheck.type != "right-triangle" && valuesToCheck.type != "equilateral-triangle" && valuesToCheck.type != "isosceles-triangle") {
-                if (flag != "tofind" && hasEqualNames) {
+                if (flag != "tofind" && flag != "angle" && hasEqualNames) {
+                    valuesToCheck.layoutItem.style.border = "1px solid red"
+                    hasDuplicates = true
+                }
+                else if(flag == "angle" && hasEqualNames && hasEqualDataTypes) {
                     valuesToCheck.layoutItem.style.border = "1px solid red"
                     hasDuplicates = true
                 }
@@ -137,7 +166,7 @@ class InitialData {
         }
     }
     checkForRightTriangle() {
-        const triangle = this.checkForTriangleArr[0]
+        const triangle = this.triangles[0]
         if(triangle.type == "right-triangle") {
             const triangleName = triangle.name
             let checkAngleArr = []
@@ -166,12 +195,16 @@ class InitialData {
                 return false
             }
             else if(checkAngleArr.length == 1 && checkHypotenuseArr.length == 1 && !checkHypotenuseArr[0].name.includes(checkAngleArr[0].name[1])) {
+                this.hypotenuse.push(checkHypotenuseArr[0])
+                this.parentRightAngle.push(checkAngleArr[0])
                 return true
             }
             else if(checkAngleArr.length == 1 && checkHypotenuseArr.length == 0) {
+                this.parentRightAngle.push(checkAngleArr[0])
                 return true
             }
             else if(checkAngleArr.length == 0 && checkHypotenuseArr.length == 1) {
+                this.hypotenuse.push(checkHypotenuseArr[0])
                 return true
             }
             else {
@@ -190,6 +223,11 @@ class InitialData {
             }
         })
     }
+    sortAlphabetically(array) {
+        array.forEach(elemToSort => {
+            elemToSort.name = elemToSort.name.split("").sort().join("")
+        })
+    }
     //set
     setTriangle(dataName, dataValue, dataType, dataValueType, dataItem) {
         if(dataType == "right-triangle" || dataType == "equilateral-triangle" || dataType == "isosceles-triangle") {
@@ -204,10 +242,9 @@ class InitialData {
                 if(dataValue == undefined) {
                     dataValueType = undefined
                 }
-                const obj = this.createTriangle(dataName, dataValue, dataType, dataValueType, dataItem)
+                const obj = this.createComponents.createTriangle(dataName, dataValue, dataType, dataValueType, dataItem)
                 this.triangles.push(obj)
                 this.initialData.push(obj)
-                this.checkForTriangleArr.push(obj)
             }
             else {
                 this.erroredDataItem.push(dataItem)
@@ -221,10 +258,10 @@ class InitialData {
             const checkDataEqual = dataEqual != undefined && dataEqual.length == 2 && dataEqual != dataName && dataEqual.split("").reverse().join("") != dataName && !/(.).*\1/.test(dataEqual) || dataEqual == undefined
             const validValue = dataValue > 0 || dataValue == undefined
             const noNameDuplicates = this.checkForDuplicates(dataName, "name", this.initialData)
-            const noAngleDuplicates = this.checkForDuplicates(dataAngle, "angle", this.initialData)
+            const noAngleDuplicates = this.checkForDuplicates(dataAngle, "angle", this.initialData, "angle", dataType)
             if(checkStrings && checkAngles && checkDataEqual && noNameDuplicates && noAngleDuplicates && validValue) {
                 dataItem.style.border = "1px solid rgba(128, 128, 128, 0.377)"
-                const obj = this.createInnerSegments(dataName, dataValue, dataEqual, dataType, dataAngle, dataItem)
+                const obj = this.createComponents.createInnerSegments(dataName, dataValue, dataType, dataEqual, dataAngle, dataItem)
                 this.innerSegments.push(obj)
                 this.initialData.push(obj)
             }
@@ -241,7 +278,7 @@ class InitialData {
             const noNameDuplicates = this.checkForDuplicates(dataName, "name", this.initialData)
             if(checkStrings && checkDataEqual && noNameDuplicates && validValue) {
                 dataItem.style.border = "1px solid rgba(128, 128, 128, 0.377)"
-                const obj = this.createAngle(dataName, dataValue, dataEqual, dataType, dataItem)
+                const obj = this.createComponents.createAngle(dataName, dataValue, dataType, dataEqual, dataItem)
                 this.angles.push(obj)
                 this.initialData.push(obj)
             }
@@ -258,7 +295,7 @@ class InitialData {
             const noNameDuplicates = this.checkForDuplicates(dataName, "name", this.initialData)
             if(checkStrings && checkDataEqual && noNameDuplicates && validValue) {
                     dataItem.style.border = "1px solid rgba(128, 128, 128, 0.377)"
-                    const obj = this.createSide(dataName, dataValue, dataEqual, dataType, dataItem)
+                    const obj = this.createComponents.createSide(dataName, dataValue, dataType , dataEqual, dataItem)
                     this.sides.push(obj)
                     this.initialData.push(obj)
             }
@@ -274,58 +311,13 @@ class InitialData {
             const noWrongToFind = this.checkForDuplicates(dataName, "name", this.initialData, "tofind")
             if(checkStrings && noNameDuplicates && noWrongToFind) {
                 dataItem.style.border = "1px solid rgba(128, 128, 128, 0.377)"
-                const obj = this.createToFind(dataName, dataType, dataItem)
+                const obj = this.createComponents.createToFind(dataName, dataType, dataItem)
                 this.tofind.push(obj)
             }
             else {
                 this.erroredDataItem.push(dataItem)
             }
         }
-    }
-    //create 
-    createTriangle(name, value, type, valueType, layoutItem) {
-        const triangle = new Triangle
-        triangle.name = name
-        triangle.value = value
-        triangle.type = type
-        triangle.valueType = valueType
-        triangle.layoutItem = layoutItem
-        return triangle
-    }
-    createInnerSegments(name, value, equal, type, angle, layoutItem) {
-        const innerSegment = new InnerSegments
-        innerSegment.name = name
-        innerSegment.value = value
-        innerSegment.equal = equal
-        innerSegment.type = type
-        innerSegment.angle = angle
-        innerSegment.layoutItem = layoutItem
-        return innerSegment
-    }
-    createAngle(name, value, equal, type, layoutItem) {
-        const angle = new Angle
-        angle.name = name
-        angle.value = value
-        angle.equal = equal
-        angle.type = type
-        angle.layoutItem = layoutItem
-        return angle
-    }
-    createSide(name, value, equal, type, layoutItem) {
-        const side = new Side
-        side.name = name
-        side.value = value
-        side.equal = equal
-        side.type = type
-        side.layoutItem = layoutItem
-        return side
-    }
-    createToFind(name, type, layoutItem) {
-        const toFind = new ToFind
-        toFind.name = name
-        toFind.type = type
-        toFind.layoutItem = layoutItem
-        return toFind
     }
 }
 const initialData = new InitialData
