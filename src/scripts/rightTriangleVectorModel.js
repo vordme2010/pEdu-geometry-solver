@@ -92,6 +92,7 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
                 }
                 else if(segmentToBuild.type == "height") {
                     this.addHight(segmentToBuild, sideOppositeSegment, firstDotOfSegment)
+                    console.log(this.sidesComponents)
                 }
             }
         }
@@ -114,8 +115,8 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
         const equationRatios = this.getEquation(oppositeSide.coordinates)[1]
         // dots equation
         const dotsEquationSlopeRatio = nerdamer.solveEquations(`m*${equationRatios[1][1]}=-1`, "m")[0].toString()
-        const dotsEquationSteepRatio = nerdamer.solveEquations(`${firstDotCoordinates[1]}=${dotsEquationSlopeRatio}*${firstDotCoordinates[0]}+b`, "b")[0].toString()
-        const dotsEquation = `y=${dotsEquationSlopeRatio}*x+${dotsEquationSteepRatio}`
+        const dotsEquationSteepRatio = nerdamer.solveEquations(`${firstDotCoordinates[1]}=${dotsEquationSlopeRatio}*${firstDotCoordinates[0]}+(b)`, "b")[0].toString()
+        const dotsEquation = `y=${dotsEquationSlopeRatio}*x+(${dotsEquationSteepRatio})`
         secondDotCoordiantes = [nerdamer.solveEquations([oppositeSideEquation, dotsEquation])[0][1], nerdamer.solveEquations([oppositeSideEquation, dotsEquation])[1][1]]
         // // second dot component
         const secondDot = this.createComponents.createDot(this.getSecondDotOfSegment(height.name, firstDot.name), secondDotCoordiantes)
@@ -128,41 +129,29 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
         this.setInnerDots(height)
         this.sidesComponents.push(height) 
         // // checking for the intersect to determine additional side components, angles & triangles
-
         this.checkForIntersect(height, dotsEquation, firstDotCoordinates, secondDotName, oppositeSide.name)
         console.log(this.trianglesComponents)
         console.log(this.anglesComponents)
-        // console.log(this.sidesComponents)
-       
-
-       
-        // new child triangles for the main loop
-
-        // this.determineNewInnerTriangles().forEach(triangle => {
-        //     this.triangles.push(triangle)
-        // })
-
-        // console.log(nerdamer.solveEquations(["y=5*x", "y=5*x+5"]))
-        // console.log(this.sidesComponents, this.anglesComponents, this.trianglesComponents)
     }
     getEquation(coordinates) {
             if(coordinates[0] == coordinates[2] && coordinates[1] != coordinates[3]) {
-                return [`0*y=-x+${coordinates[0]}`, [["b", coordinates[0]], ["m", -1]]]
+                return [`0*y=-x+(${coordinates[0]})`, [["b", coordinates[0]], ["m", -1]]]
             }
             else if(coordinates[0] != coordinates[2] && coordinates[1] == coordinates[3]) {
-                return [`y=0*x+${coordinates[1]}`, [["b", coordinates[1]], ["m", 1]]]
+                return [`y=0*x+(${coordinates[1]})`, [["b", coordinates[1]], ["m", 1]]]
             }
             else {
-                const firstEquation = `${coordinates[1]}=m*${coordinates[0]}+b`
-                const secondEquation = `${coordinates[3]}=m*${coordinates[2]}+b`
+                const firstEquation = `${coordinates[1]}=m*${coordinates[0]}+(b)`
+                const secondEquation = `${coordinates[3]}=m*${coordinates[2]}+(b)`
                 const equationRatios = nerdamer.solveEquations([firstEquation, secondEquation])
-                return [`y=${equationRatios[1][1]}*x+${equationRatios[0][1]}`, equationRatios]
+                return [`y=${equationRatios[1][1]}*x+(${equationRatios[0][1]})`, equationRatios]
             }
     }
-    determineNewInnerTriangles(side, type, sideEquation, secondDotName) {
+    determineNewInnerTriangles(side, type, secondDotName) {
         let triangleSides = []
         let sidesWithFirstDot = []
         let sidesWithSecondDot = []
+        const sideRatios = this.getEquation(side.coordinates)[1]
         this.sidesComponents.forEach(arraySide => {
             if(arraySide.name.includes(side.name[0])) {
                 sidesWithFirstDot.push(arraySide)
@@ -174,7 +163,12 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
         sidesWithFirstDot.forEach(firstDotSide => {
             sidesWithSecondDot.forEach(secondDotSide => {
                 if(secondDotSide.name.includes(firstDotSide.name[0]) || secondDotSide.name.includes(firstDotSide.name[1])) {
-                    if(this.checkForOneSegmentSides(sideEquation, firstDotSide.coordinates) &&  this.checkForOneSegmentSides(sideEquation, secondDotSide.coordinates)) {
+                    // console.log(this.checkForOneSegmentSides(sideEquation, firstDotSide.coordinates), firstDotSide, side)
+                    // console.log(this.checkForOneSegmentSides(sideEquation, secondDotSide.coordinates), secondDotSide, side)
+                    const firstDotSideRatios = this.getEquation(firstDotSide.coordinates)[1]
+                    const secondDotSideRatios = this.getEquation(secondDotSide.coordinates)[1]
+                    // console.log(this.getEquation([firstDotSide.coordinates[0], firstDotSide.coordinates[1], secondDotSide.coordinates[0], secondDotSide.coordinates[1]])[0])
+                    if(this.checkForOneSegmentSides(sideRatios, firstDotSideRatios) && this.checkForOneSegmentSides(sideRatios, secondDotSideRatios)) {
                         triangleSides.push([firstDotSide, side, secondDotSide])
                     }
                 }
@@ -193,7 +187,7 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
                 innerAngles.forEach(angle => {
                     let rightAngleValue = undefined
                     if(angle[1] == secondDotName) {
-                        rightAngleValue = 90
+                        rightAngleValue = "90"
                     }
                    this.anglesComponents.push(this.createComponents.createAngle(angle, rightAngleValue, "angle"))
                 })
@@ -207,20 +201,8 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
     }
 
 
-    checkForOneSegmentSides(equation, sideCoordinates) {
-        let flag1 = false
-        let flag2 = false
-        let firstEquation = equation
-        firstEquation = this.replaceAt(firstEquation, `${sideCoordinates[1]}`, firstEquation.indexOf("y"))
-        if(nerdamer.solveEquations(firstEquation, "x").toString() != sideCoordinates[0]) {
-            flag1 = true
-        }
-        let secondEquation = equation
-        secondEquation = this.replaceAt(secondEquation, `${sideCoordinates[3]}`, secondEquation.indexOf("y"))
-        if(nerdamer.solveEquations(secondEquation, "x").toString() != sideCoordinates[2]) {
-            flag2 = true
-        }
-        if(!flag1 && !flag2) {
+    checkForOneSegmentSides(sideRatios, dotsRatios) {
+        if(sideRatios[0][1] == dotsRatios[0][1] && sideRatios[1][1] == dotsRatios[1][1]) {
             return false
         }
         else {
@@ -243,7 +225,6 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
                     const result = nerdamer.solveEquations([segmentEquation, arraySegmentEquation])
                     const coordinates = [result[0][1], result[1][1]]
                     if(firstDotCoordinates[0] != coordinates[0] && firstDotCoordinates[1] != coordinates[1]) {
-                        arraySegment.innerDots.forEach(dot => {
                             let sideName
                             let sideCoordinates
                             let intersectDotName 
@@ -253,34 +234,27 @@ export class RightTriangleVectorModel extends TriangleVectorModel {
                                 sideType = initialSegment.type
                             }
                             else {
-                                intersectDotName = this.randomIntersectDot()
+                                intersectDotName = this.randomIntersectDot().name
                                 intersectDotName.coordinates = [coordinates[0], coordinates[1]]
                                 sideType = "side"
                             }
-                            if(dot[2] != 0 || coordinates[1] != 0 || dot[2] == 0 && coordinates[1] == 0) {
-                                if(dot[1] > coordinates[0]) {
-                                    sideName = intersectDotName + dot[0]
-                                    sideCoordinates = [coordinates[0], coordinates[1], dot[1], dot[2]]
-                                }
-                                else if(dot[1] < coordinates[0]) {
-                                    sideName = dot[0] + intersectDotName
-                                    sideCoordinates = [dot[1], dot[2], coordinates[0], coordinates[1]]
-                                }
+                        arraySegment.innerDots.forEach(dot => {
+                            const firstHorizontalSideCondition = dot[1] != coordinates[0] && dot[1] != 0 || coordinates[0] != 0 && dot[1] < coordinates[0] 
+                            const firstVerticalSideCondition = dot[2] < coordinates[1] && dot[1] == coordinates[0]
+                            const secondHorizontalSideCondition = dot[1] != coordinates[0] && dot[1] != 0 || coordinates[0] != 0 && dot[1] > coordinates[0] 
+                            const secondVerticalSideCondition = dot[2] > coordinates[1] && dot[1] == coordinates[0]
+                            if(firstHorizontalSideCondition || firstVerticalSideCondition) {
+                                sideName = dot[0] + intersectDotName
+                                sideCoordinates = [dot[1], dot[2], coordinates[0], coordinates[1]]
                             }
-                            else if(dot[1] == 0 && coordinates[0] == 0 && dot[2] != 0 || coordinates[1] != 0) {
-                                if(dot[1] > coordinates[0]) {
-                                    sideName = intersectDotName + dot[0]
-                                    sideCoordinates = [coordinates[0], coordinates[1], dot[1], dot[2]]
-                                }
-                                else if(dot[1] < coordinates[0]) {
-                                    sideName = dot[0] + intersectDotName
-                                    sideCoordinates = [dot[1], dot[2], coordinates[0], coordinates[1]]
-                                }
+                            else if(secondHorizontalSideCondition || secondVerticalSideCondition) {
+                                sideName = intersectDotName + dot[0]
+                                sideCoordinates = [coordinates[0], coordinates[1], dot[1], dot[2]]
                             } 
                             const side = this.createComponents.createSide(sideName, undefined, "side")
                             side.coordinates = sideCoordinates
+                            this.determineNewInnerTriangles(side, sideType, intersectDotName)
                             this.setInnerDots(side)
-                            this.determineNewInnerTriangles(side, sideType, arraySegmentEquation, intersectDotName)
                             this.sidesComponents.push(side)
                             console.log(this.trianglesComponents)
                         })
