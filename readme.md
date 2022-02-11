@@ -1,8 +1,7 @@
 # pifagorEdu
 ## Who we are:
-### program that will help you to improve your knowledge of geometry, 
-   solve and prove nonlinear geometric problems.
-   
+### program that will help you to improve your knowledge of geometry, solve and prove nonlinear geometric problems.
+
 >  ermission is hereby granted, free of charge, to any person obtaining a copy
    of this software from its author must follow
    accroding limitations: the rights
