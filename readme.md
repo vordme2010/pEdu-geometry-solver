@@ -1,7 +1,8 @@
 # pifagorEdu
 ## Who we are:
 >  program that will help you to improve your knowledge of geometry, solve and prove nonlinear geometric problems.
-## Author's project rights of usage
+
+## Author's project rights of usage:
 
 >  ermission is hereby granted, free of charge, to any person obtaining a copy
    of this software from its author must follow
