@@ -12,6 +12,7 @@
    furnished to do so, subject to the following conditions:
    
 >  be: organizers, founders and managers of scientific events
+
 >  joint dev's 
 
 >  the software is provided "as is", without warranty of any kind, express or
