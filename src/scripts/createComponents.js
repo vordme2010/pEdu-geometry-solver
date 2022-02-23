@@ -12,7 +12,7 @@ export class CreateComponents {
         triangle.layoutItem = layoutItem
         return triangle
     }
-    createInnerSegments(name, value, type, equal, angle, layoutItem, coordinates = [], innerDots = []) {
+    createInnerSegments(name, value, type, equal, angle, layoutItem, coordinates = [], innerDots = [], innerItems = [], parentItem) {
         const innerSegment = new InnerSegments
         innerSegment.name = name
         innerSegment.value = value
@@ -22,18 +22,22 @@ export class CreateComponents {
         innerSegment.layoutItem = layoutItem
         innerSegment.coordinates = coordinates
         innerSegment.innerDots = innerDots
+        innerSegment.innerItems = innerItems
+        innerSegment.parentItem = parentItem
         return innerSegment
     }
-    createAngle(name, value, type, equal, layoutItem) {
+    createAngle(name, value, type, equal, layoutItem, innerItems = [], parentItem) {
         const angle = new Angle
         angle.name = name
         angle.value = value
         angle.type = type
         angle.equal = equal
         angle.layoutItem = layoutItem
+        angle.innerItems = innerItems
+        angle.parentItem = parentItem 
         return angle
     }
-    createSide(name, value, type, equal, layoutItem, coordinates = [], innerDots = []) {
+    createSide(name, value, type, equal, layoutItem, coordinates = [], innerDots = [], innerItems = [], parentItem) {
         const side = new Side
         side.name = name
         side.value = value
@@ -42,6 +46,8 @@ export class CreateComponents {
         side.layoutItem = layoutItem
         side.coordinates = coordinates
         side.innerDots = innerDots
+        side.innerItems = innerItems
+        side.parentItem = parentItem
         return side
     }
     createToFind(name, type, layoutItem) {

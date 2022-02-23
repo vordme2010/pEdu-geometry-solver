@@ -16,6 +16,7 @@ class InitialData {
         this.parentRightAngle = []
         this.hypotenuse = []
         // funcs
+        this.clearAnswerArea()
         this.runSolving()
     }
     runSolving() {
@@ -26,6 +27,10 @@ class InitialData {
                 runButton.click()
             }
         })
+    }
+    clearAnswerArea() {
+        let answerArea = document.querySelector(".js-workspace__result-solution")
+        answerArea.innerHTML = ""
     }
     gatherInitialData() {
         this.resetDataArrays()
@@ -73,6 +78,7 @@ class InitialData {
                         this.innerSegments, 
                         this.sides, 
                         this.angles,
+                        this.tofind,
                         this.parentRightAngle,
                         this.hypotenuse
                     )

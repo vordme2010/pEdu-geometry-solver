@@ -41,7 +41,6 @@ class AddElements {
         //reset inputs settings
         this.resetInputsSettings()
     }
-
     inputsSettings(target, classification) {
         const addBtn = document.body.querySelector(`.js-workspace__${classification}-add-btn`)
         const itemWrapper = target.closest(`.js-workspace__${classification}-item`)

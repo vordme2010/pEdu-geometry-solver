@@ -54,13 +54,6 @@ export class Angle {
         return this._value
     }
 
-    set closestParent(closestParent) {
-        this._closestParent = closestParent
-    }
-    get closestParent() {
-        return this._closestParent
-    }
-
     set equal(equal) {
         this._equal = equal
     }
@@ -73,6 +66,20 @@ export class Angle {
     }
     get type() {
         return this._type
+    }
+
+    set parentItem(parentItem) {
+        this._parentItem = parentItem
+    }
+    get parentItem() {
+        return this._parentItem
+    }
+
+    set innerItems(innerItems) {
+        this._innerItems = innerItems
+    }
+    get innerItems() {
+        return this._innerItems
     }
 
     set layoutItem(layoutItem) {
@@ -114,6 +121,12 @@ export class InnerSegments extends Side{
         return this._angle
     }
     
+    set closestParent(closestParent) {
+        this._closestParent = closestParent
+    }
+    get closestParent() {
+        return this._closestParent
+    }
     // type in extended Angel class: median / height / angle-bisector
 }
 
