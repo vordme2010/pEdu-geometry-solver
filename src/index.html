@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/bigP.png" type="image/x-icon">
     <link rel="stylesheet" href="styles/styles.css">
     <title>PifagorEdu</title>
 </head>
@@ -37,10 +38,11 @@
                                     <option class="workspace__condition-select-option" value="isosceles-triangle">Isosceles Triangle</option> -->
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle">Angle</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="side">Side</option>
-                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option>
-                                    <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
+                                    <!-- <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option> -->
+                                    <!-- <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option> -->
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="height">Height</option>
                                     <option class="workspace__condition-select-option js-workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
+                                    <!-- <option class="workspace__condition-select-option js-workspace__condition-select-option" value="intersect-dot">Dot of intersect</option> -->
                                 </select>
                             </div> 
                             <div class="u-input-btn">
@@ -82,7 +84,7 @@
                         <svg width="30" height="30" class="u-svg-btn workspace__tofind-add-btn js-workspace__tofind-add-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path class="js-add-path"d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM4 12.172C4.04732 16.5732 7.64111 20.1095 12.0425 20.086C16.444 20.0622 19.9995 16.4875 19.9995 12.086C19.9995 7.68451 16.444 4.10977 12.0425 4.086C7.64111 4.06246 4.04732 7.59876 4 12V12.172ZM13 17H11V13H7V11H11V7H13V11H17V13H13V17Z" fill="rgba(0, 0, 0, 0.650)"/>
                         </svg>
-
+                        
                     </div>
                     <div class="workspace__tofind-buttons">
                         <button class="workspace__tofind-reset-btn js-workspace__tofind-reset-btn">reset</button>
@@ -93,15 +95,15 @@
             <div class="workspace__result">
                 <h2 class="u-title workspace__result-title">result:</h2>
                 <canvas id="myCanvas" width="200px" height="150px"></canvas>
-                <div class="workspace__result-solution">
+                <div style="padding: 20px;" class="workspace__result-solution js-workspace__result-solution">
                 </div>
             </div>
-            <div style="align-self: flex-end;">version: 0.0.1</div>
-            
+            <div style="align-self: flex-end;">version: 0.0.2</div>
         </div>
     </main>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <script src="libraries/math.js"></script>
-    <!-- <script src="scripts/triangleComponents.js"></script> -->
+    <script src="libraries/grid.js"></script>
     <script type="module" src="scripts/initialData.js"></script>
     <script src="scripts/layout.js"></script>
 </body>

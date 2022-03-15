@@ -21,8 +21,8 @@ class AddElements {
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="right-triangle">Right Triangle</option>
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle">Angle</option>
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="side">Side</option>
-        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option>
-        <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option>
+        <!-- <option class="workspace__condition-select-option js-workspace__condition-select-option" value="median">Median</option> -->
+        <!-- <option class="workspace__condition-select-option js-workspace__condition-select-option" value="angle-bisector">Angle Bisector</option> -->
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="height">Height</option>
         <option class="workspace__condition-select-option js-workspace__condition-select-option" value="hypotenuse">Hypotenuse</option>
         </select>`

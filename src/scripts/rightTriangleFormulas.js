@@ -4,7 +4,6 @@ export class RightTriangleFormulas extends TriangleFormulas {
         super()
     }
     pickUpAMethod(toFind) {
-        // console.log(toFind)
         if(toFind[1] == "side" || toFind[1] == "hypotenuse") {
             return [
                 this.pythagoreanTheorem,
@@ -21,9 +20,6 @@ export class RightTriangleFormulas extends TriangleFormulas {
             ]
         }
     }
-    // innerSidesMethod() {
-
-    // }
     sinTheorem1(object, toFind, toFindArray, checkForWrongData, determineOppositeAngle, checkValueForMethods, getSin, getSinX, sinTheorem) {
         const anglesArr = [object.angle1, object.angle2, object.angle3]
         let side1 = object.side1

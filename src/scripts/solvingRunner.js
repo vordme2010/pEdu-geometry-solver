@@ -21,20 +21,25 @@ export class SolvingRunner {
         let allSolvings = undefined
         let methodsToCheck = []
         toFindArray.forEach(toFind => {
+            const toFindValue = toFind[0].value
             if(this.toFind.indexOf(toFind) != -1) {
                 allToFind = [toFind]
             }
-            if(toFind[0].value == undefined) {
+            if(toFindValue == undefined) {
                 let shortestMethodInObj = undefined
                 this.objects.forEach(obj=> { 
                     obj.components.forEach(component=> {
                         if(component != undefined && component.value == undefined) {
-                            if(toFind[0].name == component.name) {
-                                shortestMethodInObj = this.pickMethods(toFind, obj, shortestMethodInObj, allToFind, solvingMethods)
+                            const algorithmObj = {toFind, obj, shortestMethodInObj, allToFind, solvingMethods}
+                            const toFindName = toFind[0].name
+                            const mainAngleCondition = toFindName != component.name && toFindName.length == 3 && toFind[1] == "angle" && component.name.length == 3 && component.type == "angle"
+                            const secondaryAngleCondition = toFindName[1] == component.name[1] && this.checkForAngleInObg(component)
+                            if(toFindName == component.name) {
+                                shortestMethodInObj = this.pickMethods(algorithmObj)
                             }
-                            else if(toFind[0].name != component.name && toFind[0].name.length == 3 && toFind[1] == "angle" && component.name.length == 3 && component.type == "angle") {
-                                if(toFind[0].name[1] == component.name[1] && this.checkForAngleInObg(component)) {
-                                    shortestMethodInObj = this.pickMethods(toFind, obj, shortestMethodInObj, allToFind, solvingMethods)
+                            else if(mainAngleCondition) {
+                                if(secondaryAngleCondition) {
+                                    shortestMethodInObj = this.pickMethods(algorithmObj)
                                 }
                             }
                         }
@@ -48,7 +53,7 @@ export class SolvingRunner {
                 }
             }
             else{
-                alert(`you unknown has a value! Value: ${toFind[0].value}`)
+                alert(`your unknown already has a value! Value: ${toFindValue}`)
             }
         })
         if(methodsToCheck.length == toFindArray.length) {
@@ -84,11 +89,7 @@ export class SolvingRunner {
                     unknownNode[3].forEach(dataName=> {
                         let nodeComponentSolving = this.findUnknownNode(dataName, lastNodes)
                         unknownNode[0] = this.replaceValue(unknownNode[0], nodeComponentSolving[0][0], nodeComponentSolving[0][1])
-                        answerArea.insertAdjacentHTML("beforeend", `
-                            <p>${nodeComponentSolving[1][1]}</p></br>
-                            <p>${nodeComponentSolving[1][0]}</p></br>
-                            <p>${nodeComponentSolving[0][1]} = ${nodeComponentSolving[0][0]}</p></br>
-                        `)
+                        this.setNodeComponentSolving(answerArea, nodeComponentSolving)
                     })
                     let result = nerdamer.solveEquations(unknownNode[0], unknownNode[2])[0].toString()
                     answerArea.insertAdjacentHTML("beforeend", `
@@ -100,16 +101,19 @@ export class SolvingRunner {
             }
             else {
                 let nodeComponentSolving = lastNodes[0]
-                answerArea.insertAdjacentHTML("beforeend", `
-                    <p>${nodeComponentSolving[1][1]}</p></br>
-                    <p>${nodeComponentSolving[1][0]}</p></br>
-                    <p>${nodeComponentSolving[0][1]} = ${nodeComponentSolving[0][0]}</p></br>
-                `)
+                this.setNodeComponentSolving(answerArea, nodeComponentSolving)
             }
             answerArea.style.height = "300px"
             // console.log(lastNodes)
             // console.log(allNodes)
         })
+    }
+    setNodeComponentSolving(answerArea, nodeComponentSolving) {
+        answerArea.insertAdjacentHTML("beforeend", `
+            <p>${nodeComponentSolving[1][1]}</p></br>
+            <p>${nodeComponentSolving[1][0]}</p></br>
+            <p>${nodeComponentSolving[0][1]} = ${nodeComponentSolving[0][0]}</p></br>
+        `)
     }
     findUnknownNode(dataName, lastNodes) {
         let nodeToFind 
@@ -126,7 +130,12 @@ export class SolvingRunner {
         let newArr = splittedArr.splice(index, name.length, `(${value})`)
         return splittedArr.join("")
     }
-    pickMethods(toFind, obj, shortestMethodInObj, allToFind, solvingMethods) {
+    pickMethods(algorithmObj) {
+        let toFind = algorithmObj.toFind
+        let obj = algorithmObj.obj
+        let shortestMethodInObj = algorithmObj.shortestMethodInObj
+        let allToFind = algorithmObj.allToFind 
+        let solvingMethods = algorithmObj.solvingMethods
         const formulas = this.rightTriangleFormulas
         const methods = formulas.pickUpAMethod(toFind)
         let toSolve = []
