@@ -1,4 +1,9 @@
 # pEdu
+## Branches info:
+>  Current stable version of appliaction is available on "early-build-0.0.1-test" branch
+>  https://github.com/vordme2010/pEdu-geometry-solver/tree/early-build-0.0.1-test
+## Page: 
+>  https://vordme2010.github.io/pEdu-page/
 ## Who we are:
 >  program that will help you to improve your knowledge of geometry, solve and prove nonlinear geometric problems.
 
